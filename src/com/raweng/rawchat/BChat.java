@@ -22,7 +22,7 @@ public class BChat extends UiApplication {
 	static final long NOTIFICATIONS_ID_1 = 0xdc5bf2f81374095L; 
 	public static boolean DEBUG = true;
 	public static DebugScreen debugConsole;
-	public static ApplicationIndicator indicator;
+	public static ApplicationIcon applicationIcon;
 	private Connection connection;
 	
 	    /* com.rim.samples.device.messagelistdemo */
@@ -86,9 +86,7 @@ public class BChat extends UiApplication {
 	            daemon.enterEventDispatcher();
         }
         EncodedImage indicatorIcon = EncodedImage.getEncodedImageResource("img/ic_indicator.png");
-        ApplicationIcon applicationIcon = new ApplicationIcon(indicatorIcon);
-        indicator = ApplicationIndicatorRegistry.getInstance().register(applicationIcon, false, false);
-        indicator.setVisible(false);
+        applicationIcon = new ApplicationIcon(indicatorIcon);
         nd.registerNotificationObjects();
         nd.enterEventDispatcher(); 
 	}

@@ -1,5 +1,6 @@
 package com.raweng.rawchat;
 
+import net.rim.blackberry.api.messagelist.ApplicationIndicatorRegistry;
 import net.rim.blackberry.api.messagelist.ApplicationMessageFolder;
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.notification.NotificationsConstants;
@@ -101,7 +102,8 @@ public class Buddy {
 			msgScreen.notify_event = new Event(NOTIFICATIONS_ID_1 , 1, 500, -1,
 					NotificationsConstants.IMPORTANT );
 			msgScreen.notify_event.fire();
-            BChat.indicator.setVisible(true);
+			msgScreen.indicator = ApplicationIndicatorRegistry.getInstance().register(BChat.applicationIcon, false, false);
+		    msgScreen.indicator.setVisible(true);
             /*
             DemoMessage message = new DemoMessage();
             message.setSender(from);

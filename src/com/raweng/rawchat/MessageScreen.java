@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStoreException;
 
+import net.rim.blackberry.api.messagelist.ApplicationIndicator;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Characters;
 import net.rim.device.api.system.Display;
@@ -39,7 +40,7 @@ public class MessageScreen extends MainScreen {
 	public static ChatHistory chatHistory;	
 	private final Buddy buddy;
 	public static Event notify_event;
-
+	public static ApplicationIndicator indicator;
 	private VerticalFieldManager bubbleManager;
 	private NewMessageNotificationManager newMessageNotificationManager;
 	
@@ -302,7 +303,9 @@ public class MessageScreen extends MainScreen {
 		if(notify_event != null){
 			notify_event.cancel();
 		}
-		BChat.indicator.setVisible(false);
+		if(indicator!=null){
+		  indicator.setVisible(false);
+		}
 		newMessageNotificationManager = new NewMessageNotificationManager();
 		bubbleManager.add(newMessageNotificationManager);
 		ef.setFocus();
