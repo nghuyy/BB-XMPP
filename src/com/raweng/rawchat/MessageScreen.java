@@ -122,11 +122,6 @@ public class MessageScreen extends MainScreen {
 				super.setExtent(width, 0);
 			}
 		};
-		
-		
-		
-
-
 
 		
 		footer = new HorizontalFieldManager(USE_ALL_WIDTH) {
@@ -143,14 +138,12 @@ public class MessageScreen extends MainScreen {
 				super.paint(g);
 			}
 		};
-		
 		ef = new ChatBoxTextBoxField(0, App.CHAT_HEIGHT, Field.FIELD_VCENTER) {
 			protected boolean navigationClick(int status, int time) {
 				send();
 				return true;
 			}
 		};
-		//ef.setFont(Font.getDefault().derive(Font.PLAIN, 14));
 		ef.setMargin(10, 5, 10, 10);
 		footer.add(ef);
 		setStatus(footer);
@@ -253,7 +246,6 @@ public class MessageScreen extends MainScreen {
 		ChatBubble bbl = new ChatBubble(messageModel, inMessageStyle);
 		bbl.setMargin(bubbleMargins);
 		chatContainer.add(bbl);
-		
 
 		this.scrollToBottom();
 		if (current) {

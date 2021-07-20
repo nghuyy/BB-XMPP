@@ -7,7 +7,7 @@ defaultTasks(
         "Release"
 )
 
-var buildNumber = 7
+var buildNumber = 8
 var localVersion = "1.0.${buildNumber}"
 var projectName = "BBChat"
 

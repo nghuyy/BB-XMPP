@@ -27,13 +27,7 @@ public class ChatBoxTextBoxField extends VerticalFieldManager {
 		managerWidth = width;
 		managerHeight = height;
 		VerticalFieldManager vfm = new VerticalFieldManager(Manager.VERTICAL_SCROLL);
-
-		editField = new EditField(){
-			public void paint(Graphics g) {
-				getManager().invalidate();
-				super.paint(g);
-			}
-		};
+		editField = new EditField();
 		vfm.setPadding(10, 20, 10, 20);
 		vfm.add(editField);
 		add(vfm);
