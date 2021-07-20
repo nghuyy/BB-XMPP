@@ -133,14 +133,6 @@ public class MessageScreen extends MainScreen {
 			public void paint(Graphics g)
 			{	
 				int saveColor = g.getColor();
-				//int saveAlpha = g.getGlobalAlpha();
-				
-		        //g.setGlobalAlpha(240);
-				//final Bitmap gradientBitmap1 = getGradientBitmap(Display.getWidth(), getHeight()/2, 0x00505050, 0x00252525);
-				//final Bitmap gradientBitmap2 = getGradientBitmap(Display.getWidth(), getHeight()/2, 0x000C0C0C, 0x00010101);
-				//g.drawBitmap(0, 0, Display.getWidth(), getHeight()/2, gradientBitmap1, 0, 0);
-				//g.drawBitmap(0,  getHeight()/2, Display.getWidth(), getHeight()/2, gradientBitmap2, 0, 0);
-				//g.setGlobalAlpha(saveAlpha);
 				g.setColor(0x001C1C1C);
 				g.drawLine(0, 0, getWidth(), 0);
 				g.setColor(Color.GRAY);
@@ -168,7 +160,6 @@ public class MessageScreen extends MainScreen {
 	public boolean keyChar(char key, int status, int time) {
 		Field currField = this.getFieldWithFocus();
 		if (currField == ef) {
-			//CustomTextBox was basically my EditField, just made a custom field for it.
 			return super.keyChar(key, status, time);
 		} else {
 			switch (key) {			

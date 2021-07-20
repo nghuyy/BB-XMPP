@@ -26,7 +26,6 @@ public class ChatBoxTextBoxField extends VerticalFieldManager {
 		super(Manager.NO_VERTICAL_SCROLL | style);
 		managerWidth = width;
 		managerHeight = height;
-
 		VerticalFieldManager vfm = new VerticalFieldManager(Manager.VERTICAL_SCROLL);
 
 		editField = new EditField(){
@@ -35,25 +34,11 @@ public class ChatBoxTextBoxField extends VerticalFieldManager {
 				super.paint(g);
 			}
 		};
-		editField.setNonSpellCheckable(true);
-		
-
 		vfm.setPadding(10, 20, 10, 20);
 		vfm.add(editField);
 		add(vfm);
 	}
 
-	/*public void paint(Graphics g) {
-		int color = g.getColor();
-		
-		g.setColor(Color.BLUE);
-		g.drawRect(0, 0, getWidth(), getHeight());
-		g.setColor(Color.WHITE);
-		g.fillRect(1, 1, getWidth()-2, getHeight()-2);
-		
-		g.setColor(color);
-		super.paint(g);
-	}*/
 	
 	protected void paintBackground(Graphics g) {
 		//paint my bubble
