@@ -85,7 +85,7 @@ public class BChat extends UiApplication {
 	            // the device shuts down or the application is uninstalled.
 	            daemon.enterEventDispatcher();
         }
-        EncodedImage indicatorIcon = EncodedImage.getEncodedImageResource("img/ic_indicator.png");
+        EncodedImage indicatorIcon = EncodedImage.getEncodedImageResource("res/img/ic_indicator.png");
         applicationIcon = new ApplicationIcon(indicatorIcon);
         nd.registerNotificationObjects();
         nd.enterEventDispatcher(); 
@@ -123,10 +123,8 @@ public class BChat extends UiApplication {
 		Buddy.btalk = this;
 		LoginScreen.btalk = this;
 		AppSavedData.bchat = this;
-		
-		
+
 		this.connection = Connection.getInstance();
-		
 		
 		AppSavedData.readOptions();
 		Vector up = AppSavedData.getUserInfo();

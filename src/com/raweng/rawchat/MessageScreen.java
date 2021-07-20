@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStoreException;
 
+import com.huynguyen.App;
 import net.rim.blackberry.api.messagelist.ApplicationIndicator;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Characters;
@@ -34,7 +35,7 @@ import com.raweng.xmppservice.ChatHistory;
 import com.raweng.xmppservice.Connection;
 import com.rim.samples.device.Event;
 
-
+//todo: Chat Screen
 public class MessageScreen extends MainScreen {
 	public static ChatManager chatManager;
 	public static ChatHistory chatHistory;	
@@ -61,16 +62,13 @@ public class MessageScreen extends MainScreen {
 	public MessageScreen(Buddy b) {
 		super(NO_VERTICAL_SCROLL | NO_VERTICAL_SCROLLBAR);
 		this.buddy = b;
-		this.setTitle("Chat with " + b.name);		
-		
+		this.setTitle(b.name);
 		Manager contentManager = getMainManager();
     	Manager screenManager = contentManager.getManager();
     	Field titleField = screenManager.getField(0);
     	titleHeight = titleField.getPreferredHeight();
-    	
 
 		this.initUI();
-		
 		
 		this.addMenuItem(new MenuItem("Remove from Recent List", 0, 0) {
 			public void run() {
@@ -135,36 +133,33 @@ public class MessageScreen extends MainScreen {
 			public void paint(Graphics g)
 			{	
 				int saveColor = g.getColor();
-				int saveAlpha = g.getGlobalAlpha();				
+				//int saveAlpha = g.getGlobalAlpha();
 				
-		        g.setGlobalAlpha(240);		        
-				final Bitmap gradientBitmap1 = getGradientBitmap(Display.getWidth(), getHeight()/2, 0x00505050, 0x00252525);
-				final Bitmap gradientBitmap2 = getGradientBitmap(Display.getWidth(), getHeight()/2, 0x000C0C0C, 0x00010101);
-				g.drawBitmap(0, 0, Display.getWidth(), getHeight()/2, gradientBitmap1, 0, 0);
-				g.drawBitmap(0,  getHeight()/2, Display.getWidth(), getHeight()/2, gradientBitmap2, 0, 0);
-				g.setGlobalAlpha(saveAlpha);				
-				
+		        //g.setGlobalAlpha(240);
+				//final Bitmap gradientBitmap1 = getGradientBitmap(Display.getWidth(), getHeight()/2, 0x00505050, 0x00252525);
+				//final Bitmap gradientBitmap2 = getGradientBitmap(Display.getWidth(), getHeight()/2, 0x000C0C0C, 0x00010101);
+				//g.drawBitmap(0, 0, Display.getWidth(), getHeight()/2, gradientBitmap1, 0, 0);
+				//g.drawBitmap(0,  getHeight()/2, Display.getWidth(), getHeight()/2, gradientBitmap2, 0, 0);
+				//g.setGlobalAlpha(saveAlpha);
 				g.setColor(0x001C1C1C);
 				g.drawLine(0, 0, getWidth(), 0);
 				g.setColor(Color.GRAY);
 				g.drawLine(0, 1, getWidth(), 1);
-				g.drawLine(0, 2, getWidth(), 2);				
-				
+				g.drawLine(0, 2, getWidth(), 2);
 				g.setColor(saveColor);				
 				//Call super to paint the graphics on the inherited window 
 				super.paint(g);
 			}
 		};
 		
-		ef = new ChatBoxTextBoxField(0, 30, Field.FIELD_VCENTER) {
+		ef = new ChatBoxTextBoxField(0, App.CHAT_HEIGHT, Field.FIELD_VCENTER) {
 			protected boolean navigationClick(int status, int time) {
 				send();
 				return true;
 			}
 		};
-		ef.setFont(Font.getDefault().derive(Font.PLAIN, 14));	
+		//ef.setFont(Font.getDefault().derive(Font.PLAIN, 14));
 		ef.setMargin(10, 5, 10, 10);
-		
 		footer.add(ef);
 		setStatus(footer);
 	}
