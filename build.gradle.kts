@@ -19,7 +19,8 @@ var bb_buildfile = listOf<String>(
         "**/*.export.xml",
         "**/*.csl",
         "**/*.cso",
-        "**/*.mak"
+        "**/*.mak",
+        "**/*.files"
 )
 
 var folder = project.projectDir
