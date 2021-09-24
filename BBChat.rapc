@@ -1,5 +1,5 @@
 MIDlet-Name: BBChat
-MIDlet-Version: 1.0.8
+MIDlet-Version: 1.0.46
 MIDlet-Vendor: VNAPPS.COM
 MIDlet-Description: XMPP
 MIDlet-Jar-URL: BBChat.jar
@@ -7,4 +7,7 @@ MIDlet-Jar-Size: 0
 MicroEdition-Profile: MIDP-2.0
 MicroEdition-Configuration: CLDC-1.1
 MIDlet-1: Chat,res/img/ic_laucher.png,
+RIM-MIDlet-Icon-1-1: res/img/chat.png
+RIM-MIDlet-Icon-1-2: res/img/chat_2.png,focused
+RIM-MIDlet-Icon-Count-1: 2
 RIM-MIDlet-Flags-1: 0

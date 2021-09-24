@@ -1,21 +1,15 @@
 package com.raweng.rawchat;
 
 import net.rim.blackberry.api.messagelist.ApplicationIndicatorRegistry;
-import net.rim.blackberry.api.messagelist.ApplicationMessageFolder;
-import net.rim.device.api.i18n.DateFormat;
+import net.rim.device.api.i18n.*;
 import net.rim.device.api.notification.NotificationsConstants;
-import net.rim.device.api.notification.NotificationsManager;
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.component.Dialog;
-import net.rim.device.api.ui.container.MainScreen;
 
 import com.raweng.xmppservice.ChatHistory;
-import com.rim.samples.device.CommunicationSimulatorThread;
 import com.rim.samples.device.Event;
-import com.rim.samples.device.DemoMessage;
-import com.rim.samples.device.MessageListDemoStore;
 
-public class Buddy {
+
+public class Buddy{
 	private static final long MAX_TIME_INTERVAL = 180000;
 	 static final long NOTIFICATIONS_ID_1 = 0xdc5bf2f81374095L; 
 	// status value
@@ -40,11 +34,11 @@ public class Buddy {
 	public long lastTimeStampBuddy;
 	public String session;
 	public Bitmap buddyImage;
-	
 	private MessageScreen msgScreen;
 
-	
-	
+
+
+
 	
 	public Buddy(String id, String n, int s) {
 		if (n == null)

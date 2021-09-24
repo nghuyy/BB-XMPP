@@ -9,14 +9,13 @@ import java.io.IOException;
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStoreException;
 
-import com.huynguyen.App;
+import com.huynguyen.bbchat.App;
 import net.rim.blackberry.api.messagelist.ApplicationIndicator;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Characters;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Color;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;

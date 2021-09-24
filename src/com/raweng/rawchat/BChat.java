@@ -13,8 +13,6 @@ import net.rim.device.api.ui.UiApplication;
 import com.raweng.xmppservice.Connection;
 import com.huynguyen.ConsequenceImpl;
 import com.rim.samples.device.NotificationsEngineListenerImpl;
-import com.rim.samples.device.MessageListDemoDaemon;
-import com.rim.samples.device.CommunicationSimulatorThread;
 
 public class BChat extends UiApplication {
     static final long NOTIFICATIONS_ID_1 = 0xdc5bf2f81374096L;
@@ -54,7 +52,6 @@ public class BChat extends UiApplication {
 
     // Constant to define number of bulk messages
     static final int MAX_MSGS = 50;
-    private CommunicationSimulatorThread _commThread;
     private LoginScreen loginscreen;
 
 
@@ -66,22 +63,16 @@ public class BChat extends UiApplication {
         if (args.length == 1 && args[0].equals("startup")) {
             // Keep this instance around for rendering
             // Notification dialogs.
-            MessageListDemoDaemon daemon = new MessageListDemoDaemon();
 
             // Register application indicator
 
-            // Check if this application registered folders already
-            ApplicationMessageFolderRegistry reg = ApplicationMessageFolderRegistry.getInstance();
-            if (reg.getApplicationFolder(INBOX_FOLDER_ID) == null) {
-                daemon.init();
-            }
+
 
             // This daemon application will be responsible for
             // listening for notifications and menu actions, it runs until
             // the device shuts down or the application is uninstalled.
-            daemon.enterEventDispatcher();
         }
-        EncodedImage indicatorIcon = EncodedImage.getEncodedImageResource("res/img/ic_indicator.png");
+        EncodedImage indicatorIcon = EncodedImage.getEncodedImageResource("res/img/chat_2.png");
         applicationIcon = new ApplicationIcon(indicatorIcon);
         nd.registerNotificationObjects();
         nd.enterEventDispatcher();

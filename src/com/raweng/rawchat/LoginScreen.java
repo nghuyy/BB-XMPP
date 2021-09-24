@@ -1,109 +1,74 @@
 package com.raweng.rawchat;
 
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.MenuItem;
-import net.rim.device.api.ui.Ui;
-import net.rim.device.api.ui.component.ButtonField;
-import net.rim.device.api.ui.component.Dialog;
-import net.rim.device.api.ui.component.LabelField;
-import net.rim.device.api.ui.component.NullField;
-import net.rim.device.api.ui.component.ObjectChoiceField;
-import net.rim.device.api.ui.container.MainScreen;
-import net.rim.device.api.ui.container.VerticalFieldManager;
-
-import com.raweng.ui.TableLayoutManager;
-import com.raweng.ui.TextBoxField;
+import com.huynguyen.bbchat.App;
+import com.huynguyen.bbchat.LocalizationResource;
+import com.huynguyen.bbchat.OptionsData;
 import com.raweng.xmppservice.Connection;
+import net.rim.device.api.i18n.ResourceBundle;
+import net.rim.device.api.ui.Keypad;
+import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.component.*;
+import net.rim.device.api.ui.container.MainScreen;
 
-public class LoginScreen extends MainScreen {
-
+public class LoginScreen extends MainScreen{
 	public static BChat btalk;
+	private final OptionsData optionData;
 	private Connection connection;
-	private boolean saved;
-	
-	private Font labelFont = Font.getDefault().derive(Font.BOLD, 5, Ui.UNITS_pt);
-	private Font textFont = Font.getDefault().derive(Font.PLAIN, 5, Ui.UNITS_pt);
-	private TextBoxField usernameTextField;
-	private TextBoxField domainTextField;
-	private TextBoxField passwordTextField;
-	private TextBoxField connectServerTextField;
-	private TextBoxField connectPortTextField;
-	private TextBoxField boshUrlTextField;
+
+	//private Font labelFont = Font.getDefault().derive(Font.BOLD, 5, Ui.UNITS_pt);
+	//private Font textFont = Font.getDefault().derive(Font.PLAIN, 5, Ui.UNITS_pt);
+	private AutoTextEditField usernameTextField;
+	private AutoTextEditField domainTextField;
+	private PasswordEditField passwordTextField;
+	private AutoTextEditField connectServerTextField;
+	private AutoTextEditField connectPortTextField;
+	private AutoTextEditField boshUrlTextField;
 	private ButtonField saveButtonField;
-	private ObjectChoiceField networkTypeChoiceField;
-	
+	//private ObjectChoiceField networkTypeChoiceField;
 	
 	public final static int NETWORK_TYPE_INDEX_ARRAY[] = {0, 1, 2, 4, 8, 16};
 	public final static String NETWORK_TYPE_NAME_ARRAY[] = {"Auto", "WIFI", "BES", "BIS", "Direct TCP","WAP"};
-	
-	
+	private ResourceBundle _resources;
+
 
 	public LoginScreen(Connection connection, boolean saved) {
-		super(NO_VERTICAL_SCROLL | NO_VERTICAL_SCROLLBAR);
+		super(NO_VERTICAL_SCROLL | USE_ALL_WIDTH);
+		_resources = App.getResource();
 		setTitle("Login");
-		
+		this.optionData = App.getOptionData();
 		this.connection = connection;
-		this.saved = saved;
+		//this.saved = saved;
 		this.initUI();
 	}
 
+
+	protected void makeMenu(final Menu menu, int context) {
+		menu.add(new MenuItem(_resources.getString(LocalizationResource.UPDATE), 0, 0) {
+			public void run() {
+				BuddyScreen.CheckUpdate();
+			}
+		});
+	}
+
 	private void initUI() {
-		VerticalFieldManager rootManager = new VerticalFieldManager(USE_ALL_WIDTH | USE_ALL_HEIGHT | Manager.VERTICAL_SCROLL | Manager.NO_VERTICAL_SCROLLBAR);
+		usernameTextField = new AutoTextEditField("Username:","",250,AutoTextEditField.AUTOCAP_OFF);
+		if (optionData.userName!=null)usernameTextField.setText(optionData.userName);
+
+		domainTextField = new AutoTextEditField("Domain: ","",250,AutoTextEditField.AUTOCAP_OFF);
+		if (optionData.domain!=null)domainTextField.setText(optionData.domain);
+
+		passwordTextField = new PasswordEditField("Password: ","",250,0);
+		if (optionData.passWord!=null)passwordTextField.setText(optionData.passWord);
+
+		connectServerTextField = new AutoTextEditField("Connect Server: ","",250,AutoTextEditField.AUTOCAP_OFF);
+		if (optionData.server!=null)connectServerTextField.setText(optionData.server);
+
+		connectPortTextField = new AutoTextEditField("Connect Port: ","",250,AutoTextEditField.AUTOCAP_OFF);
+		if (optionData.port!=null)connectPortTextField.setText(optionData.port);
+		boshUrlTextField = new AutoTextEditField("BOSH Url: ","",250,AutoTextEditField.AUTOCAP_OFF);
+		if (optionData.boshurl!=null)boshUrlTextField.setText(optionData.boshurl);
 		
-		TableLayoutManager fieldsContainer = new TableLayoutManager(new int[] {
-				TableLayoutManager.USE_PREFERRED_SIZE,
-				TableLayoutManager.FIXED_WIDTH }, new int[] { 0, 200 }, 2, 5,
-				Manager.NO_HORIZONTAL_SCROLL | NO_VERTICAL_SCROLL | NO_VERTICAL_SCROLLBAR | FIELD_HCENTER);
-		fieldsContainer.setMargin(10, 10, 10, 10);
-		
-		
-		
-		LabelField usernameLabelField = new LabelField("Username: ", Field.FIELD_VCENTER);
-		usernameLabelField.setFont(labelFont);
-		usernameTextField = new TextBoxField();
-		usernameTextField.setFont(textFont);
-		
-		
-		LabelField domainLabelField = new LabelField("Domain: ", Field.FIELD_VCENTER);
-		domainLabelField.setFont(labelFont);
-		domainTextField = new TextBoxField();
-		domainTextField.setFont(textFont);		
-		
-		
-		LabelField passwordLabelField = new LabelField("Password: ", Field.FIELD_VCENTER);
-		passwordLabelField.setFont(labelFont);
-		passwordTextField = new TextBoxField(true);
-		passwordTextField.setFont(textFont);
-		
-		
-		LabelField connectServerLabelField = new LabelField("Connect Server: ", Field.FIELD_VCENTER);
-		connectServerLabelField.setFont(labelFont);
-		connectServerTextField = new TextBoxField();
-		connectServerTextField.setFont(textFont);
-		
-		
-		LabelField connectPortLabelField = new LabelField("Connect Port: ", Field.FIELD_VCENTER);
-		connectPortLabelField.setFont(labelFont);
-		connectPortTextField = new TextBoxField();
-		connectPortTextField.setFont(textFont);
-		
-		
-		LabelField boshUrlLabelField = new LabelField("Bosh url: ", Field.FIELD_VCENTER);
-		boshUrlLabelField.setFont(labelFont);
-		boshUrlTextField = new TextBoxField();
-		boshUrlTextField.setFont(textFont);
-		
-		
-		LabelField networkTypeLabelField = new LabelField("Network Type: ", Field.FIELD_VCENTER);
-		networkTypeLabelField.setFont(labelFont);
-		networkTypeChoiceField = new ObjectChoiceField("", NETWORK_TYPE_NAME_ARRAY, 0, Field.FIELD_LEFT | Field.FIELD_VCENTER);
-		networkTypeChoiceField.setFont(textFont);
-		
-		
-		saveButtonField = new ButtonField("Save") {
+		saveButtonField = new ButtonField("Login") {
 			protected boolean keyChar(char key, int status, int time) {
 				if (key == Keypad.KEY_ENTER) {
 					return login();
@@ -115,41 +80,18 @@ public class LoginScreen extends MainScreen {
 				return login();
 			}
 		};
-		saveButtonField.setFont(textFont);
+
 		
+		add(usernameTextField);
+		add(domainTextField);
+		add(passwordTextField);
+		add(connectServerTextField);
+		add(connectPortTextField);
+		add(boshUrlTextField);
+		//add(new NullField(Field.NON_FOCUSABLE));
+		add(saveButtonField);
 		
-		fieldsContainer.add(usernameLabelField);
-		fieldsContainer.add(usernameTextField);
-		fieldsContainer.add(domainLabelField);
-		fieldsContainer.add(domainTextField);
-		fieldsContainer.add(passwordLabelField);
-		fieldsContainer.add(passwordTextField);
-		fieldsContainer.add(connectServerLabelField);
-		fieldsContainer.add(connectServerTextField);
-		fieldsContainer.add(connectPortLabelField);
-		fieldsContainer.add(connectPortTextField);
-		fieldsContainer.add(boshUrlLabelField);
-		fieldsContainer.add(boshUrlTextField);
-		fieldsContainer.add(networkTypeLabelField);
-		fieldsContainer.add(networkTypeChoiceField);
-		fieldsContainer.add(new NullField(Field.NON_FOCUSABLE));
-		fieldsContainer.add(saveButtonField);
-		
-		rootManager.add(fieldsContainer);
-		add(rootManager);
-		
-		
-		
-		if (this.saved) {
-			usernameTextField.setText(this.connection.getUsername());
-			domainTextField.setText(this.connection.getHost());
-			passwordTextField.setText(this.connection.getPassword());
-			connectServerTextField.setText(this.connection.getServer());
-			connectPortTextField.setText(this.connection.getPort());
-			boshUrlTextField.setText(this.connection.getHttpburl());
-			networkTypeChoiceField.setSelectedIndex(getNetworkTypeNameArrayIndex(this.connection.getNetworkType()));
-		}
-		
+
 		
 		
 		
@@ -177,6 +119,7 @@ public class LoginScreen extends MainScreen {
 	}
 	
 	private boolean login() {
+
 		if (usernameTextField.getText().length() == 0 || passwordTextField.getText().length() == 0) {
 			Dialog.alert("Invalid username/password!");
 			return true;
@@ -205,7 +148,14 @@ public class LoginScreen extends MainScreen {
 			serverDef.usessl = false;
 		}
 
-		connection.getChatHandlerInstance().login(usernameTextField.getText(), passwordTextField.getText(), domainTextField.getText(), serverDef, NETWORK_TYPE_INDEX_ARRAY[networkTypeChoiceField.getSelectedIndex()]);
+		optionData.userName = usernameTextField.getText();
+		optionData.passWord = passwordTextField.getText();
+		optionData.domain = domainTextField.getText();
+		optionData.server = serverDef.server;
+		optionData.boshurl = serverDef.boshUrl;
+		optionData.port = serverDef.port;
+		optionData.commit();
+		connection.getChatHandlerInstance().login(optionData.userName, optionData.passWord, optionData.domain , serverDef, 0);
 		return true;
 	}
 	
@@ -217,7 +167,6 @@ public class LoginScreen extends MainScreen {
 	protected boolean onSavePrompt() {
 		return true;
 	}
-	
 	
 	
 	public static int getNetworkTypeNameArrayIndex(int networkTypeIndexArrayIndex){

@@ -1,5 +1,14 @@
 package com.raweng.rawchat;
 
+import com.huynguyen.bbchat.App;
+import com.huynguyen.bbchat.LocalizationResource;
+import huynguyen.bbos.Net;
+import huynguyen.bbos.UI;
+import huynguyen.bbos.java.IRequestCallback;
+import huynguyen.bbos.ults.Updator;
+import huynguyen.bbos.views.UpdateDiag;
+import net.rim.device.api.i18n.ResourceBundle;
+import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
@@ -11,7 +20,8 @@ import net.rim.device.api.ui.container.MainScreen;
 
 import com.raweng.ui.IconLabelField;
 import com.raweng.xmppservice.Connection;
-
+import org.json.me.JSONException;
+import org.json.me.JSONObject;
 
 public class BuddyScreen extends MainScreen {
 	public static BChat btalk;
@@ -20,9 +30,11 @@ public class BuddyScreen extends MainScreen {
 	public IconLabelField statusBanner;	
 	private RecentBuddyListField recentBuddyList;
 	public BuddyListField buddyList;
-	
-	
+	private ResourceBundle _resources;
+
+
 	public BuddyScreen(BuddyListField l) {
+		this._resources = App.getResource();
 		statusBanner = new IconLabelField(BuddyListField.onlineIcon, "Available");
 		this.setTitle(statusBanner);
 		
@@ -179,7 +191,11 @@ public class BuddyScreen extends MainScreen {
 				btalk.pushScreen(new LoginScreen(Connection.getInstance(), true));
 			}
 		});
-		
+		this.addMenuItem(new MenuItem("Check Update", 0x00030010, 0) {
+			public void run() {
+				BuddyScreen.CheckUpdate();
+			}
+		});
 		// add exit menuitem
 		this.addMenuItem(new MenuItem("Exit", 0x00030010, 0) {
 			public void run() {
@@ -189,6 +205,7 @@ public class BuddyScreen extends MainScreen {
 				BuddyScreen.chatManager.exitBtalk();
 			}
 		});
+
 		if (BChat.DEBUG) {
 			this.addMenuItem(new MenuItem("Debug console", 0x00030006, 0) {
 				public void run() {
@@ -226,5 +243,45 @@ public class BuddyScreen extends MainScreen {
 
 	public RecentBuddyListField getRecentBuddyList() {
 		return recentBuddyList;
+	}
+
+	public static void CheckUpdate() {
+		final ResourceBundle _resources = App.getResource();
+		Net.GET(App.UPDATE_URL, new IRequestCallback() {
+			public void success(final String message) {
+				UI.r(new Runnable() {
+					public void run() {
+						ApplicationDescriptor appDesc =
+								ApplicationDescriptor.currentApplicationDescriptor();
+						try {
+							JSONObject jsonObject = new JSONObject(message);
+							boolean hasupdate = Updator.check(jsonObject.getInt("build"), appDesc.getVersion());
+							if (hasupdate) {
+								String[] bundle = new String[]{
+										_resources.getString(LocalizationResource.UPDATE_AVAIABLE),
+										_resources.getString(LocalizationResource.VERSION_D),
+										_resources.getString(LocalizationResource.TIME_D),
+										_resources.getString(LocalizationResource.GET_UPDATE)
+								};
+								(new UpdateDiag(App.UPDATE_JAD, jsonObject.getString("version"), jsonObject.getString("time"), bundle)).doModal();
+							} else {
+								Dialog.alert(_resources.getString(LocalizationResource.NO_UPDATE));
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					}
+				});
+			}
+
+			public void error(final String message) {
+				UI.r(new Runnable() {
+					public void run() {
+						Dialog.alert(message);
+					}
+				});
+			}
+		});
 	}
 }

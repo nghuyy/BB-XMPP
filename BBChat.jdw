@@ -12,12 +12,15 @@ DependenciesInWorkspace=0
 [ImplicitRules
 ]
 [Imports
+..\..\..\..\..\..\Program Files (x86)\Research In Motion\BlackBerry JDE 5.0.0\lib\net_rim_api.jar
 ]
 [ManifestImports
 ]
 [Projects
+..\HLibs\HLibs.jdp
 BBChat.jdp
 ]
 [ReleaseActiveProjects
+..\HLibs\HLibs.jdp
 BBChat.jdp
 ]
