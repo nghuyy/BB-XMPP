@@ -1,4 +1,4 @@
-package com.rim.samples.device;
+package com.huynguyen;
 
 
 import java.io.EOFException;

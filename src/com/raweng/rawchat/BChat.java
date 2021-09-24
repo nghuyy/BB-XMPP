@@ -3,8 +3,6 @@ package com.raweng.rawchat;
 import java.util.Vector;
 
 import net.rim.blackberry.api.messagelist.ApplicationIcon;
-import net.rim.blackberry.api.messagelist.ApplicationIndicator;
-import net.rim.blackberry.api.messagelist.ApplicationIndicatorRegistry;
 import net.rim.blackberry.api.messagelist.ApplicationMessage;
 import net.rim.blackberry.api.messagelist.ApplicationMessageFolderRegistry;
 import net.rim.device.api.notification.NotificationsConstants;
@@ -13,7 +11,7 @@ import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.UiApplication;
 
 import com.raweng.xmppservice.Connection;
-import com.rim.samples.device.ConsequenceImpl;
+import com.huynguyen.ConsequenceImpl;
 import com.rim.samples.device.NotificationsEngineListenerImpl;
 import com.rim.samples.device.MessageListDemoDaemon;
 import com.rim.samples.device.CommunicationSimulatorThread;
